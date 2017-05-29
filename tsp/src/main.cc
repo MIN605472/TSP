@@ -1,5 +1,6 @@
 #include <cstring>
 #include <iostream>
+#include "tsp_branch_bound_solver.h"
 #include "tsp_brute_force_solver.h"
 #include "tsp_dynamic_solver.h"
 #include "tsp_greedy_solver.h"
@@ -22,6 +23,7 @@ int main(int argc, char *argv[]) {
     } else if (strcmp(argv[1], "-pd") == 0) {
       solver.reset(new TspDynamicSolver());
     } else {
+      solver.reset(new TspBranchBoundSolver());
     }
 
     auto path = solver->Find(graph.get());
