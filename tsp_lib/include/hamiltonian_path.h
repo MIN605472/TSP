@@ -33,7 +33,8 @@ class HamiltonianPath {
   /// otherwise
   bool CanIPush(Vertex vertex) const;
 
-  friend std::ostream& operator<<(std::ostream& os, const HamiltonianPath& path);
+  friend std::ostream& operator<<(std::ostream& os,
+                                  const HamiltonianPath& path);
 
  private:
   const Graph* graph_;

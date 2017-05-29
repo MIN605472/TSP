@@ -22,7 +22,7 @@ void TspBruteForceSolver::FindAux() {
     auto last_vertex = path_aux_->Peek();
     for (Vertex v = 0; v < graph_->size(); ++v) {
       auto distance = (*graph_)[last_vertex][v];
-      if (distance != 0 && !path_aux_->CanIPush(v)) {
+      if (distance != 0 && path_aux_->CanIPush(v)) {
         path_aux_->Push(v);
         FindAux();
         path_aux_->Pop();
