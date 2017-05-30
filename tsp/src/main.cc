@@ -4,6 +4,7 @@
 #include "tsp_brute_force_solver.h"
 #include "tsp_dynamic_solver.h"
 #include "tsp_greedy_solver.h"
+#include <chrono>
 
 int main(int argc, char *argv[]) {
   if (argc != 3 || (strcmp(argv[1], "-fb") && strcmp(argv[1], "-av") &&
@@ -26,9 +27,12 @@ int main(int argc, char *argv[]) {
       solver.reset(new TspBranchBoundSolver());
     }
 
+    auto t1 = std::chrono::high_resolution_clock::now();
     auto path = solver->Find(graph.get());
+    auto t2 = std::chrono::high_resolution_clock::now();
+    auto elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
     if (path != nullptr) {
-      std::cout << *path;
+      std::cout << *path << elapsed_time << " us\n";
     } else {
       std::cerr << "The graph doesn't have a hamiltonian path\n";
     }
