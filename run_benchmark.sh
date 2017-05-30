@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ulimit -t 1200 # 20 minutes
-INPUT_FILES="tspbenchmarks/*.tsp"
+INPUT_FILES="benchmark_input/random/*.tsp"
 OPTIONS="fb av rp pd"
 for OPTION in $OPTIONS; do
   for FILE in $INPUT_FILES; do

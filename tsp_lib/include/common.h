@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <memory>
 #include <vector>
 
@@ -13,3 +14,5 @@ typedef std::size_t Vertex;
 /// @throws std::invalid_argument when there is an error reading the file or the
 /// graph in the file has the wrong format
 std::unique_ptr<Graph> GraphFromFile(const char *file_name);
+
+std::ostream &operator<<(std::ostream &os, const Graph &graph);

@@ -1,5 +1,6 @@
 #include "common.h"
 #include <fstream>
+#include <iterator>
 #include <sstream>
 
 /// Parses a string that contains natural numers separated by spaces
@@ -41,4 +42,13 @@ std::unique_ptr<Graph> GraphFromFile(const char *file_name) {
   }
   graph_file.close();
   return graph;
+}
+
+std::ostream &operator<<(std::ostream &os, const Graph &graph) {
+  std::ostream_iterator<Distance> oi(os, " ");
+  for (const auto &v : graph) {
+    std::copy(v.begin(), v.end(), oi);
+    os << '\n';
+  }
+  return os;
 }
