@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iterator>
 #include <sstream>
+#include <stdexcept>
 
 /// Parses a string that contains natural numers separated by spaces
 /// @param line string to be parsed
@@ -16,13 +17,12 @@ std::vector<Distance> ParseLine(std::string line) {
   return row;
 }
 
-// TODO: change the type of the exceptions
 std::unique_ptr<Graph> GraphFromFile(const char *file_name) {
   std::unique_ptr<Graph> graph(new Graph());
   std::ifstream graph_file;
   graph_file.open(file_name);
   if (!graph_file.is_open()) {
-    throw std::invalid_argument("Error while opening file");
+    throw std::runtime_error("Error while opening file");
   }
   std::string line;
   std::vector<Distance> matrix_row;
@@ -30,15 +30,15 @@ std::unique_ptr<Graph> GraphFromFile(const char *file_name) {
     matrix_row = ParseLine(line);
     if (matrix_row.size() == 0 ||
         (graph->size() > 0 && matrix_row.size() != (*graph)[0].size())) {
-      throw std::invalid_argument("Matrix format error");
+      throw std::runtime_error("Matrix format error");
     }
     graph->push_back(std::move(matrix_row));
   }
   if (graph->size() == 1 && (*graph)[0].size() != 1) {
-    throw std::invalid_argument("Matrix format error");
+    throw std::runtime_error("Matrix format error");
   }
   if (graph_file.bad()) {
-    throw std::invalid_argument("Error while reading file");
+    throw std::runtime_error("Error while reading file");
   }
   graph_file.close();
   return graph;
