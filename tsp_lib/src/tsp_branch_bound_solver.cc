@@ -12,10 +12,10 @@ std::unique_ptr<HamiltonianPath> TspBranchBoundSolver::Find(
   Node root_node(graph);
   alive.push(root_node);
   bool better_solutions = true;
-  while (!alive.empty() && better_solutions) {
+  while (better_solutions) {
     auto children = alive.top().Children();
     alive.pop();
-    for (auto &node : children) {
+    for (const auto &node : children) {
       if (node.lower_bound() < upper_bound) {
         alive.push(node);
         auto cost = node.Cost();
@@ -25,7 +25,8 @@ std::unique_ptr<HamiltonianPath> TspBranchBoundSolver::Find(
         }
       }
     }
-    better_solutions = !(alive.top().lower_bound() >= upper_bound);
+    better_solutions =
+        !alive.empty() && alive.top().lower_bound() < upper_bound;
   }
   return solution;
 }
@@ -34,7 +35,7 @@ Distance TspBranchBoundSolver::CalculateUpperBound(const Graph *graph) const {
   TspGreedySolver greedy;
   auto path = greedy.Find(graph);
   if (path != nullptr) {
-    return path->Cost();
+    return path->Cost() + 1;
   } else {
     return std::numeric_limits<Distance>::max();
   }
