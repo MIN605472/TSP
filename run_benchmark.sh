@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INPUT_FILES=$(ls -v1 benchmark_input/random/*.tsp)
+INPUT_FILES=$(ls -v1 benchmark_input/*.tsp)
 OPTIONS="fb av rp pd"
 NUM_SAMPLES="5"
 TO="false"
